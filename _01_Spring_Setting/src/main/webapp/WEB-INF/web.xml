@@ -13,7 +13,7 @@
         <param-name>contextConfigLocation</param-name>
         <param-value>/WEB-INF/spring/root-context.xml</param-value>
     </context-param>
-
+    
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
@@ -42,19 +42,18 @@
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
-
+    
     <servlet-mapping>
         <servlet-name>appServlet</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
     <!--filter 관련 설정-->
-    <!--사용자가 보낸 요청을 DispatherServlet이 처리하기 전에 거치는 객체가 Filter 객체이다.
+    <!--사용자가 보낸 요청을 DispatcherServlet이 처리하기 전에 거치는 객체가 Filter 객체이다.
         스프링 시큐리티 필터가 적용되어 있다면 인가 및 인증이 먼저 처리되고
         인코딩 필터가 적용되어 있다면 클라이언트에서 넘어온 데이터가 인코딩 필터를 먼저 거쳐
-        인코딩 작업이 먼저 처리된 후에 DispatcherServlet에게 인코딩도니 데이터가 전달된다.
-        -->
-
+        인코딩 작업이 먼저 처리된 후에 DispatcherServlet에게 인코딩된 데이터가 전달된다.
+    -->
     <filter>
         <filter-name>characterEncoding</filter-name>
         <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
@@ -68,4 +67,17 @@
         <filter-name>characterEncoding</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+
+
+
+
+
+
+
+
+
+
+
+
+
 </web-app>

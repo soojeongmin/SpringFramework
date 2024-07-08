@@ -1,0 +1,7 @@
+<%@ page language="java" contentType="text/html; UTF-8" pageEncoding="UTF-8" %>
+<html>
+<body>
+<h2>바보</h2>
+<img src="${pageContext.request.contextPath}/images/bit.png"/> <!--pageContext.request.contextPath = localhost:8090-->
+</body>
+</html>
