@@ -32,6 +32,6 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public MemberDto getMemberByUsername(MemberDto memberDto) {
-        return memberDao.getMemberByUsername(memberDto.getUsername());
+        return memberDao.getMemberByUsername(memberDto.getUsername() );
     }
 }
