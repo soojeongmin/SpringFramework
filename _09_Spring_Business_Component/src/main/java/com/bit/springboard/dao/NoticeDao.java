@@ -2,6 +2,7 @@ package com.bit.springboard.dao;
 
 import com.bit.springboard.common.JDBCUtil;
 import com.bit.springboard.dto.BoardDto;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,10 +11,11 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NoticeBoardDao {
-    private Connection conn;
-    private PreparedStatement stmt;
-    private ResultSet rs;
+@Repository
+public class NoticeDao {
+    private Connection conn = null;
+    private PreparedStatement stmt = null;
+    private ResultSet rs = null;
 
     // 게시글 등록 쿼리
     private final String POST = "INSERT INTO NOTICE(TITLE, CONTENT, WRITER_ID) VALUES(?, ?, ?)";
@@ -42,7 +44,7 @@ public class NoticeBoardDao {
             "                           WHERE ID = ?";
 
     // 특정 id의 게시글 하나만 조회
-    private final String GET_BOARD = "SELECT F.ID" +
+    private final String GET_BOARD = "SELECT N.ID" +
             "                                   , N.TITLE" +
             "                                   , N.CONTENT" +
             "                                   , N.WRITER_ID" +

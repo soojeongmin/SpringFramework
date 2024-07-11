@@ -1,6 +1,6 @@
 package com.bit.springboard.service.impl;
 
-import com.bit.springboard.dao.NoticeBoardDao;
+import com.bit.springboard.dao.NoticeDao;
 import com.bit.springboard.dto.BoardDto;
 import com.bit.springboard.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,36 +9,36 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class NoticeBoardServiceImpl implements BoardService {
-    private NoticeBoardDao noticeBoardDao;
+public class NoticeServiceImpl implements BoardService {
+    private NoticeDao noticeDao;
 
     @Autowired
-    public NoticeBoardServiceImpl(NoticeBoardDao noticeBoardDao){
-        this.noticeBoardDao = noticeBoardDao;
+    public NoticeServiceImpl(NoticeDao noticeDao){
+        this.noticeDao = noticeDao;
     }
 
     @Override
     public void post(BoardDto boardDto) {
-        noticeBoardDao.post(boardDto);
+        noticeDao.post(boardDto);
     }
 
     @Override
     public void modify(BoardDto boardDto) {
-        noticeBoardDao.modify(boardDto);
+        noticeDao.modify(boardDto);
     }
 
     @Override
     public void delete(int id) {
-        noticeBoardDao.delete(id);
+        noticeDao.delete(id);
     }
 
     @Override
     public List<BoardDto> getBoardList() {
-        return noticeBoardDao.getBoardList();
+        return noticeDao.getBoardList();
     }
 
     @Override
     public BoardDto getBoard(int id) {
-        return noticeBoardDao.getBoard(id);
+        return noticeDao.getBoard(id);
     }
 }
