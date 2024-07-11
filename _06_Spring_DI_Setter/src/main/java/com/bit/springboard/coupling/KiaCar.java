@@ -1,8 +1,8 @@
 package com.bit.springboard.coupling;
 
 public class KiaCar implements Car {
-    private CarAudio carAudio;
     private String color;
+    private CarAudio carAudio;
 
     public void engineOn() {
         System.out.println("KiaCar 시동을 건다.");
@@ -28,15 +28,6 @@ public class KiaCar implements Car {
         System.out.println("KiaCar 객체 삭제");
     }
 
-    public CarAudio getCarAudio() {
-        return carAudio;
-    }
-
-    public void setCarAudio(CarAudio carAudio) {
-        System.out.println("setCarAudio 호출");
-        this.carAudio = carAudio;
-    }
-
     public String getColor() {
         return color;
     }
@@ -44,5 +35,14 @@ public class KiaCar implements Car {
     public void setColor(String color) {
         System.out.println("setColor 호출");
         this.color = color;
+    }
+
+    public CarAudio getCarAudio() {
+        return carAudio;
+    }
+
+    public void setCarAudio(CarAudio carAudio) {
+        System.out.println("setCarAudio 호출");
+        this.carAudio = carAudio;
     }
 }

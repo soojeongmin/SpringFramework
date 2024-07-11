@@ -25,7 +25,7 @@ public class CarOwner_Solve_Coupling {
         System.out.println(kCar.getColor());
 
         // scope: "prototype" 객체를 요청할 때마다 새로운 객체 생성
-        // car = (Car)factory.getBean("kiaCar");
+//        car = (Car)factory.getBean("kiaCar");
 
         // lazy-init: "true" 스프링컨테이너 구동시 객체를 생성하지 않고 요청시에 객체를 생성한다.
         HyundaiCar hCar = factory.getBean("hyundaiCar", HyundaiCar.class);
