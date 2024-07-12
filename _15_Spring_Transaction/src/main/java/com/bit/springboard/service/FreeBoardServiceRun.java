@@ -14,11 +14,12 @@ public class FreeBoardServiceRun {
         BoardService boardService = factory.getBean("freeBoardServiceImpl", BoardService.class);
 
         BoardDto boardDto = new BoardDto();
+        boardDto.setId(50);
         boardDto.setTitle("자유게시글1");
         boardDto.setContent("자유게시글 1번입니다.");
         // writer_id는 member 테이블의 id 컬럼을 foreign key로 가져오기 때문에
         // member 테이블에 존재하는 id 값만 입력할 수 있다.
-        boardDto.setWRITER_ID(1);
+        boardDto.setWRITER_ID(4);
 
         boardService.post(boardDto);
 

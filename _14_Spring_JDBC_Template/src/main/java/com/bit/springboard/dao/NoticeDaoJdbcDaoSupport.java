@@ -3,19 +3,18 @@ package com.bit.springboard.dao;
 import com.bit.springboard.dto.BoardDto;
 import com.bit.springboard.service.BoardRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Repository;
 
+import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class NoticeDao {
-    private JdbcTemplate jdbcTemplate;
-
+public class NoticeDaoJdbcDaoSupport extends JdbcDaoSupport {
     @Autowired
-    public NoticeDao(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
+    public void setSuperDataSource(DataSource dataSource) {
+        super.setDataSource(dataSource);
     }
 
     private final String POST = "INSERT INTO NOTICE(TITLE, CONTENT, WRITER_ID) VALUES(?, ?, ?)";
@@ -57,7 +56,7 @@ public class NoticeDao {
     public void post(BoardDto boardDto) {
         System.out.println("NoticeDao의 post 메소드 실행");
 
-        jdbcTemplate.update(POST, boardDto.getTitle(), boardDto.getContent(), boardDto.getWRITER_ID());
+        getJdbcTemplate().update(POST, boardDto.getTitle(), boardDto.getContent(), boardDto.getWRITER_ID());
 
         System.out.println("NoticeDao의 post 메소드 실행 종료");
     }
@@ -65,7 +64,7 @@ public class NoticeDao {
     public void modify(BoardDto boardDto) {
         System.out.println("NoticeDao의 modify 메소드 실행");
 
-        jdbcTemplate.update(MODIFY, boardDto.getTitle(), boardDto.getContent(),
+        getJdbcTemplate().update(MODIFY, boardDto.getTitle(), boardDto.getContent(),
                                         boardDto.getModdate().toString(), boardDto.getId());
 
         System.out.println("NoticeDao의 modify 메소드 실행 종료");
@@ -76,7 +75,7 @@ public class NoticeDao {
 
         List<BoardDto> noticeList = new ArrayList<>();
 
-        noticeList = jdbcTemplate.query(GET_NOTICE_LIST, new BoardRowMapper());
+        noticeList = getJdbcTemplate().query(GET_NOTICE_LIST, new BoardRowMapper());
 
         System.out.println("NoticeDao의 getNoticeList 메소드 실행 종료");
         return noticeList;
@@ -85,7 +84,7 @@ public class NoticeDao {
     public void delete(int id) {
         System.out.println("NoticeDao의 delete 메소드 실행");
 
-        jdbcTemplate.update(DELETE, id);
+        getJdbcTemplate().update(DELETE, id);
 
         System.out.println("NoticeDao의 delete 메소드 실행 종료");
     }
@@ -97,7 +96,7 @@ public class NoticeDao {
 
         Object[] args = {id};
 
-        boardDto = jdbcTemplate.queryForObject(GET_NOTICE, args, new BoardRowMapper());
+        boardDto = getJdbcTemplate().queryForObject(GET_NOTICE, args, new BoardRowMapper());
 
         System.out.println("NoticeDao의 getNotice 메소드 실행 종료");
         return boardDto;
