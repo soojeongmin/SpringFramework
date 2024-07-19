@@ -2,7 +2,7 @@ package com.bit.springboard.service.impl;
 
 import com.bit.springboard.dao.FreeBoardDao;
 import com.bit.springboard.dto.BoardDto;
-import com.bit.springboard.dto.Creteria;
+import com.bit.springboard.dto.Criteria;
 import com.bit.springboard.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,8 +42,9 @@ public class FreeBoardServiceImpl implements BoardService {
     }
 
     @Override
-    public List<BoardDto> getBoardList(Map<String, String> searchMap, Creteria cri) {
-        cri.setStartNum((cri.getPageNum() - 1) * cri.getAmount()); // *현재 페이지부터 10개씩 가져오기 위한 시작 번호
+    public List<BoardDto> getBoardList(Map<String, String> searchMap, Criteria cri) {
+        cri.setStartNum((cri.getPageNum() - 1) * cri.getAmount());
+
         // mybatis에서 parameter를 하나만 받을 수 있다.
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("search", searchMap);
@@ -66,4 +67,18 @@ public class FreeBoardServiceImpl implements BoardService {
     public int getBoardTotalCnt(Map<String, String> searchMap) {
         return freeBoardDao.getBoardTotalCnt(searchMap);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

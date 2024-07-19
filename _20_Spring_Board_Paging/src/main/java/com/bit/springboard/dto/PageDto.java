@@ -3,31 +3,31 @@ package com.bit.springboard.dto;
 public class PageDto {
     // 표출되는 첫 페이지 번호
     private int startPage;
-    // 표출되는 마지막 페이지 번호
+    // 표출되는 끝 페이지 번호
     private int endPage;
-    // 이전, 다음 표출 여부
+    // 이전, 다음 버튼 표출 여부
     private boolean prev, next;
     // 총 게시글의 개수
     private int total;
     // Creteria 객체
-    private Creteria cri;
+    private Criteria cri;
 
-    public PageDto(Creteria cri, int total) {
+    public PageDto(Criteria cri, int total) {
         this.cri = cri;
         this.total = total;
 
         // 끝 페이지 계산
-        this.endPage = (int) (Math.ceil(cri.getPageNum()/10.0)) * 10;
+        this.endPage = (int)(Math.ceil(cri.getPageNum() / 10.0)) * 10;
 
         // 시작 페이지 계산
         this.startPage = this.endPage - 9;
 
         // 실제 마지막 게시글이 있는 페이지 계산
-        int realEndPage = (int) (Math.ceil((total * 1.0) / cri.getAmount()));
+        int realEndPage = (int)(Math.ceil((total / 1.0) / cri.getAmount()));
 
         // endPage가 realEndPage보다 커지면
         // endPage에 realEndPage를 주입
-        if(this.endPage > realEndPage) {
+        if(endPage > realEndPage) {
             this.endPage = realEndPage;
         }
 
@@ -76,11 +76,11 @@ public class PageDto {
         this.total = total;
     }
 
-    public Creteria getCri() {
+    public Criteria getCri() {
         return cri;
     }
 
-    public void setCri(Creteria cri) {
+    public void setCri(Criteria cri) {
         this.cri = cri;
     }
 

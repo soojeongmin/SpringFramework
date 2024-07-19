@@ -23,8 +23,8 @@
             </div>
             <div class="container mt-3 w-50">
                 <form id="search-form" action="/board/free-list.do" method="post">
-                    <input type="hidden" name="pageNum" value="${page.cri.pageNum}"/>
-                    <input type="hidden" name="amount" value="${page.cri.amount}"/>
+                    <input type="hidden" name="pageNum" value="${page.cri.pageNum}">
+                    <input type="hidden" name="amount" value="${page.cri.amount}">
                     <div class="row">
                         <div class="col-3">
                             <select class="form-select" name="searchCondition">
@@ -126,13 +126,23 @@
     <script>
         $(() => {
             $("#search-icon").on("click", (e) => {
-               $("#search-form").submit();
+                $("input[name='pageNum']").val(1);
+                $("#search-form").submit();
+            });
+
+            $("input[name='searchKeyword']").on("keypress", (e) => {
+                if(e.key === 'Enter') {
+                    $("input[name='pageNum']").val(1);
+                }
             });
 
             $(".pagination a").on("click", (e) => {
                 e.preventDefault();
+
                 // console.log($(e.target).attr("href"));
+
                 $("input[name='pageNum']").val($(e.target).attr("href"));
+
                 $("#search-form").submit();
             });
         });
