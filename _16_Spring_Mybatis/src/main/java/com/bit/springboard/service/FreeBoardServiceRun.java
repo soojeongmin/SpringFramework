@@ -18,7 +18,7 @@ public class FreeBoardServiceRun {
         boardDto.setContent("자유게시글 1번입니다.");
         // writer_id는 member 테이블의 id 컬럼을 foreign key로 가져오기 때문에
         // member 테이블에 존재하는 id 값만 입력할 수 있다.
-        boardDto.setWRITER_ID(4);
+        boardDto.setWRITER_ID(1);
 
         boardService.post(boardDto);
 

@@ -16,7 +16,7 @@ public class NoticeServiceRun {
         BoardDto boardDto = new BoardDto();
         boardDto.setTitle("공지사항1");
         boardDto.setContent("공지사항 1번입니다.");
-        boardDto.setWRITER_ID(4);
+        boardDto.setWRITER_ID(1);
 
         boardService.post(boardDto);
 
@@ -24,16 +24,16 @@ public class NoticeServiceRun {
         modifyBoardDto.setTitle("공지사항1 수정");
         modifyBoardDto.setContent("공지사항 1번입니다.-수정됨");
         modifyBoardDto.setModdate(LocalDateTime.now());
-        modifyBoardDto.setId(5);
+        modifyBoardDto.setId(1);
 
         boardService.modify(modifyBoardDto);
 
-        boardService.delete(13);
+        boardService.delete(2);
 
         boardService.getBoardList().forEach(notice -> {
             System.out.println(notice);
         });
 
-        System.out.println(boardService.getBoard(15));
+        System.out.println(boardService.getBoard(4));
     }
 }

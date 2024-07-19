@@ -11,7 +11,7 @@ xsi:schemaLocation에서 namespace를 사용하기 위한 설정파일인 xsd파
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
                            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
                            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
-                            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+                           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
     <!--ContextLoaderListener 객체에서 사용하는 설정파일
         web.xml을 읽으면서 제일 먼저 불러오는 설정파일이다.
         프로젝트에서 전반적으로 사용되는 자원(DB커넥션, 트랜잭션처리, 파일업로드 등)을 생성하고 설정.
@@ -91,16 +91,21 @@ xsi:schemaLocation에서 namespace를 사용하기 위한 설정파일인 xsd파
     <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
         <property name="dataSource" ref="dataSource"/>
     </bean>
+
+    <!--Transaction 설정-->
+    <!--Tansaction을 관리하는 객체를 bean으로 등록-->
     <bean id="txManager"
-            class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-            <property name="dataSource" ref="dataSource"/>
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
     </bean>
 
     <!--DML(insert, update, delete)가 종료되면 commit이나 rollback이 자동 실행되도록 설정
         TransactionManager만 등록한다고 Transaction이 자동 관리되진 않고
-        AOP 설정을 통해서 Transaction이 공통 기능으로 동작되도록 설정해야 한다.-->
-    <!--Transaction은 advice를 tx:advice 엘리먼트로 등록한다-->
+        AOP 설정을 통해서 Transaction이 공통 기능으로 동작되도록 설정해야 된다.
+    -->
+    <!-- Transcation은 advice를 tx:advice 엘리먼트로 등록한다-->
     <tx:advice id="txAdvice" transaction-manager="txManager">
+        <!--어떤 이름의 메소드에서 Transaction이 동작할 지 설정-->
         <tx:attributes>
             <!--get으로 시작하는 메소드에서는 Transaction 동작하지 않음-->
             <tx:method name="get*" read-only="true"/>
@@ -108,12 +113,14 @@ xsi:schemaLocation에서 namespace를 사용하기 위한 설정파일인 xsd파
             <tx:method name="*"/>
         </tx:attributes>
     </tx:advice>
-<!-- AOP 설정을 통한 어드바이스와 포인트컷 메소드 위빙 -->
+
+    <!--AOP 설정을 통한 어드바이스와 포인트컷 메소드 위빙-->
     <aop:config>
         <aop:pointcut id="txPointcut" expression="execution(* com.bit.springboard.service..*Impl.*(..))"/>
-        <!--어떤 메소드를 공통 기능으로 사용할 지 알 수 있을 때에는 aop:aspect를 사용하지만
+        <!--어떤 메소드를 공통 기능으로 사용할 지 알수 있을 때는 aop:aspect를 사용하지만
             commit, rollback이 언제 동작할 시점을 개발자가 지정할 수 없기 때문에 어떤 메소드를 공통 기능으로
-            사용할 지 없으므로 aop:advisor를 사용한다.-->
+            사용할 지 알 수 없으므로 aop:advisor를 사용한다.
+        -->
         <aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut"/>
     </aop:config>
 </beans>
