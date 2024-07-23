@@ -50,7 +50,7 @@ public class NoticeServiceImpl implements BoardService {
     }
 
     @Override
-    public void modify(BoardDto boardDto) {
+    public void modify(BoardDto boardDto, MultipartFile[] uploadFiles, MultipartFile[] changeFiles, String originFiles) {
         boardDto.setModdate(LocalDateTime.now());
         noticeDao.modify(boardDto);
     }

@@ -21,9 +21,11 @@
                 <h4>자유게시글 상세</h4>
             </div>
             <div class="container mt-3 w-50">
-                <form id="modify-form" action="/board/modify.do" method="post">
+                <form id="modify-form" action="/board/modify.do" method="post" enctype="multipart/form-data">
                     <input type="hidden" name="id" value="${freeBoard.id}">
                     <input type="hidden" name="type" value="free">
+                    <!--객체 배열 형태의 originFiles 배열을 문자열로 변환하여 input에 담아서 전송-->
+                    <input type="hidden" name="originFiles" id="originFiles">
                     <div class="form-group">
                         <label for="title">제목</label>
                         <input type="text" class="form-control" id="title" name="title" value="${freeBoard.title}" required>
@@ -153,6 +155,31 @@
                     imageLoader(file);
                 }
             });
+
+            // modify-form이 서브밋될 때
+            // uploadFiles 배열에 담겨있는 파일들을 input name="uploadFiles"에 담기
+            // changeFiles 배열에 담겨있는 파일들을 input name="changeFiles"에 담기
+            // originFiles 배열에 담겨있는 객체들을 문자열로 변환하여 input name="originFiles"에 담기
+            $("#modify-form").on("submit", (e) => {
+                let dataTransfer1 = new DataTransfer();
+                let dataTransfer2 = new DataTransfer();
+
+                for(i in uploadFiles) {
+                    const file = uploadFiles[i];
+                    dataTransfer1.items.add(file);
+                }
+
+                $("#uploadFiles")[0].files = dataTransfer1.files;
+
+                for(i in changeFiles) {
+                    const file = changeFiles[i];
+                    dataTransfer2.items.add(file);
+                }
+
+                $("#changeFiles")[0].files = dataTransfer2.files;
+
+                $("#originFiles").val(JSON.stringify(originFiles));
+            });
         });
 
         // 업로도되어 있어서 표출되어 있는 파일들을 클릭했을 때 실행될 메소드
@@ -277,7 +304,7 @@
                 // uploadFiles.filter(((file, index) => file.name != deleteFileName || uploadFiles.indexOf(file) != index));
 
                 // input에서도 파일 삭제
-                // input type="file"은 첨부`된 파일들을 fileList 형태로 관리
+                // input type="file"은 첨부된 파일들을 fileList 형태로 관리
                 // fileList는 File 객체에 바로 담을수 없기 때문에
                 // DataTransfer라는 클래스를 사용해서 변환 후에 담아줘야한다.
                 let dataTransfer = new DataTransfer();
